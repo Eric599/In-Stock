@@ -1,6 +1,15 @@
 from bs4 import BeautifulSoup
+from dotenv import load_dotenv
+from twilio.rest import Client
+import os
 import requests
+import logging
 
+load_dotenv()
+twilio_SID = os.getenv("TwilioSID")
+auth = os.getenv("TwilioAuth")
+twilio_num = os.getenv("TwilioNum")
+my_num = os.getenv("MyNum")
 #URL = "https://www.canakit.com/raspberry-pi-4-starter-kit.html"
 URL = "https://www.canakit.com/raspberry-pi-4-extreme-aluminum-case-kit.html"
 stock_dict = {}
@@ -20,6 +29,21 @@ def check_stock():
     get_stock(URL)
     for key in stock_dict:
         if stock_dict[key] == "Add to Cart":
-            print(key + " is in stock!")
+            client = Client(twilio_SID, auth)
+            message = client.messages.create(
+                to=my_num, 
+                from_=twilio_num,
+                body=key + " is in stock!")
+            logging.basicConfig(format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
+            logging.info(message.sid)
+            
+
+
+# client = Client(twilio_SID, auth)
+
+# message = client.messages.create(
+#     to=my_num, 
+#     from_=twilio_num,
+#     body="Hello from Python!")
 
 check_stock()
