@@ -4,6 +4,8 @@ from twilio.rest import Client
 import os
 import requests
 import logging
+import time
+import schedule
 
 load_dotenv()
 twilio_SID = os.getenv("TwilioSID")
@@ -38,5 +40,10 @@ def check_stock():
             logging.info(message.sid)
             
 
+schedule.every().day.at("08:00").do(check_stock)
+schedule.every().day.at("18:00").do(check_stock)
 
-check_stock()
+while True:
+    schedule.run_pending()
+    time.sleep(60) # wait one minute
+
