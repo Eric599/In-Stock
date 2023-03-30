@@ -10,8 +10,8 @@ twilio_SID = os.getenv("TwilioSID")
 auth = os.getenv("TwilioAuth")
 twilio_num = os.getenv("TwilioNum")
 my_num = os.getenv("MyNum")
-#URL = "https://www.canakit.com/raspberry-pi-4-starter-kit.html"
-URL = "https://www.canakit.com/raspberry-pi-4-extreme-aluminum-case-kit.html"
+URL = "https://www.canakit.com/raspberry-pi-4-starter-kit.html"
+#URL = "https://www.canakit.com/raspberry-pi-4-extreme-aluminum-case-kit.html"
 stock_dict = {}
 
 def get_stock(link):
@@ -38,12 +38,5 @@ def check_stock():
             logging.info(message.sid)
             
 
-
-# client = Client(twilio_SID, auth)
-
-# message = client.messages.create(
-#     to=my_num, 
-#     from_=twilio_num,
-#     body="Hello from Python!")
 
 check_stock()
